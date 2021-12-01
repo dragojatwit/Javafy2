@@ -40,7 +40,7 @@ public class javafyClient extends Thread
 			
 			
 			System.out.println("Welcome to Javafy!");
-			System.out.println("use #/select to choose");
+			System.out.println("use /select # to choose");
 			
 			while (getCurrentLevel().equals("topLevel")){
 				setCurrentLevel("topLevel");
@@ -191,51 +191,51 @@ public class javafyClient extends Thread
 		refresh();
 	}
 	 
-public static void select(String command){
+public static void select(String parameter){
  //Shows the contents of the specified playlist or album
 	 String lvl = getCurrentLevel();
 	 
 	 switch(lvl) {
 		case "topLevel":
 
-			switch (command) {
-			case "1/select":
+			switch (parameter) {
+			case "1":
 				setCurrentLevel("playlistLevel");
 				playlistLevel();
 				break;
-			case "2/select":
+			case "2":
 				setCurrentLevel("albumLevel");
 				albumLevel();
 				break;
-			case "3/select":
+			case "3":
 				setCurrentLevel("songLevel");
 				songLevel();
 				break;
 			default:
-				System.out.println("Ivalid input: " + command);
+				System.out.println("Ivalid input: " + parameter);
 				System.out.println("Please enter a valid number (1-3)\"/return\"");
 			break;
 			}
 		break;
 		case "playlistLevel":
-			switch (command) {
-			case "1/select":
+			switch (parameter) {
+			case "1":
 				setCurrentLevel("playlist1");
 				playlist1();
 				break;
-			case "2/select":
+			case "2":
 				setCurrentLevel("playlist2");
 				playlist2();
 				break;
 			}
 		break;
 		case "albumLevel":
-			switch (command) {
-			case "1/select":
+			switch (parameter) {
+			case "1":
 				setCurrentLevel("album1");
 				album1();
 				break;
-			case "2/select":
+			case "2":
 				setCurrentLevel("album2");
 				album2();
 				break;
@@ -405,15 +405,19 @@ public static void refresh(){
 
 //redirects commands
 	public static void commandTaker(String command){
+		int spaceIndex = command.indexOf(" ");
+		String parameter = "";
+		if(spaceIndex != -1)
+		{
+			parameter = command.substring(spaceIndex + 1);
+			command = command.substring(0,spaceIndex);
+//			System.out.println(parameter);
+//			System.out.println(command);
+		}
+		
 		switch(command) {
-		case "1/select":
-			select(command);
-		break;
-		case "2/select":
-			select(command);
-		break;
-		case "3/select":
-			select(command);
+		case "/select":
+			select(parameter);
 		break;
 		case "/return":
 			back();
