@@ -20,8 +20,8 @@ public class javafyClient //implements Runnable
 
 {
 	static String currentSong = new String("");
-	//static Queue<Song> trackQueue = new LinkedList<Song>();
-	//static Queue<Song> prevQueue = new LinkedList<Song>();
+	static Queue<String> trackQueue = new LinkedList<String>();
+	static Queue<String> prevQueue = new LinkedList<String>();
 	
 //	public static void play(){
 //		//Resumes the current song
@@ -57,7 +57,7 @@ public class javafyClient //implements Runnable
 //	}
 //
 	 public static void clear (){//Clears the entire queue with the exception of the song currently playing
-		 Song s = trackQueue.poll();
+		 String s = trackQueue.poll();
 		 
 		 trackQueue.clear();
 		 
@@ -70,7 +70,7 @@ public class javafyClient //implements Runnable
 //	}
 //	 
 	 public static void next() {//Skips to the next song in queue
-		 Song s = trackQueue.poll();
+		 String s = trackQueue.poll();
 		 
 		 prevQueue.add(s);
 		 
@@ -79,27 +79,30 @@ public class javafyClient //implements Runnable
 			 System.exit(1);
 		 }
 	}
-//	 
-//	 public static void back() {//Plays the last song played
-//		 Queue<Song> tempQueue = new LinkedList<Song>();
-//		 Song p = prevQueue.poll();
-//		  
-//		 if(p == null){
-//			 System.out.println("No previous tracks in queue");
-//			 System.exit(1);
-//		 }
-//		 
-//		 tempQueue.add(p);
-//		 tempQueue.addAll(trackQueue);
-//		 
-//		 trackQueue.clear();
-//		 trackQueue.addAll(tempQueue);
-//	}
+	 
+
+	 public static void last() {//Plays the last song played
+		 Queue<String> tempQueue = new LinkedList<String>();
+		 String p = prevQueue.poll();
+		  
+		 if(p == null){
+			 System.out.println("No previous tracks in queue");
+			 System.exit(1);
+		 }
+		 
+		 tempQueue.add(p);
+		 tempQueue.addAll(trackQueue);
+		 
+		 trackQueue.clear();
+		 trackQueue.addAll(tempQueue);
+	}
+
 //	 
 //	 public static void restart() {
 //		 //Starts the current song from the beginning
 //	}
 //	 
+
 	 public static void back(){//most likely type will change to song instead of void.
 		 //Shows the previous display [returns error if display is at start]
 		 String lvl = getCurrentLevel();
@@ -139,7 +142,17 @@ public class javafyClient //implements Runnable
 				albumLevel();
 			break;
 			}
-		 
+		} 
+	public static void show(){//Shows the queue
+		int tQ = trackQueue.size();
+		Queue<String> tempQueue = new LinkedList<String>();
+		
+		for(int i = 0; i <= tQ; i++){
+			String s = trackQueue.poll();
+			tempQueue.add(s);
+			System.out.printf("%d", s);
+		}
+
 	}
 	 
 public static void select(String command){
@@ -195,18 +208,6 @@ public static void select(String command){
 		}
 }
 
-//	 
-//	public static void show(){//Shows the queue
-//		int tQ = trackQueue.size();
-//		Queue<Song> tempQueue = new LinkedList<Song>();
-//		
-//		for(int i = 0; i <= tQ; i++){
-//			Song s = trackQueue.poll();
-//			tempQueue.add(s);
-//			System.out.printf("%d", s);
-//		}
-//	}
-
 //goes on the end of anything that is not a select or return function/ method (refresh)
 public static void refresh(){
 	 String lvl = getCurrentLevel();
@@ -251,9 +252,12 @@ public static void refresh(){
 	private static String currentLevel;
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Start of main
 	public static void main(String[] args) {
-	 //   currentSong = "Music/mmad.wav";
-	   // audioPlayer player = new audioPlayer(currentSong);
-	  //  Application.launch(audioPlayer.class,args);
+
+	    currentSong = "Music/mmad.wav";
+	    audioPlayer player = new audioPlayer();
+	    player.changeSong(currentSong);
+	    Application.launch(audioPlayer.class,args);
+
 			Scanner sc = new Scanner(System.in);
 			//keeps track of current level for return command
 			//topLevel, playlistLevel, albumLevel, songLevel
