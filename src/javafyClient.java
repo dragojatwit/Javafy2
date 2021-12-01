@@ -20,7 +20,9 @@ import javafx.stage.Stage;
 public class javafyClient extends Thread
 
 {
-	static String currentSong = new String("");
+	//Song currentSong = null;
+	//Song angelDust = new Song("Mac Miller - Angel Dust", "Music/mmad.wav","Faces");
+	String currentSong = "";
 	static Queue<String> trackQueue = new LinkedList<String>();
 	static Queue<String> prevQueue = new LinkedList<String>();
 	private static String currentLevel;
