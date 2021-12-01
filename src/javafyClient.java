@@ -20,8 +20,8 @@ public class javafyClient //implements Runnable
 
 {
 	static String currentSong = new String("");
-	//static Queue<Song> trackQueue = new LinkedList<Song>();
-	//static Queue<Song> prevQueue = new LinkedList<Song>();
+	static Queue<String> trackQueue = new LinkedList<String>();
+	static Queue<String> prevQueue = new LinkedList<String>();
 	
 //	public static void play(){
 //		//Resumes the current song
@@ -57,7 +57,7 @@ public class javafyClient //implements Runnable
 //	}
 //
 	 public static void clear (){//Clears the entire queue with the exception of the song currently playing
-		 Song s = trackQueue.poll();
+		 String s = trackQueue.poll();
 		 
 		 trackQueue.clear();
 		 
@@ -70,7 +70,7 @@ public class javafyClient //implements Runnable
 //	}
 //	 
 	 public static void next() {//Skips to the next song in queue
-		 Song s = trackQueue.poll();
+		 String s = trackQueue.poll();
 		 
 		 prevQueue.add(s);
 		 
@@ -81,8 +81,8 @@ public class javafyClient //implements Runnable
 	}
 //	 
 	 public static void back() {//Plays the last song played
-		 Queue<Song> tempQueue = new LinkedList<Song>();
-		 Song p = prevQueue.poll();
+		 Queue<String> tempQueue = new LinkedList<String>();
+		 String p = prevQueue.poll();
 		  
 		 if(p == null){
 			 System.out.println("No previous tracks in queue");
@@ -111,10 +111,10 @@ public class javafyClient //implements Runnable
 //	 
 	public static void show(){//Shows the queue
 		int tQ = trackQueue.size();
-		Queue<Song> tempQueue = new LinkedList<Song>();
+		Queue<String> tempQueue = new LinkedList<String>();
 		
 		for(int i = 0; i <= tQ; i++){
-			Song s = trackQueue.poll();
+			String s = trackQueue.poll();
 			tempQueue.add(s);
 			System.out.printf("%d", s);
 		}
