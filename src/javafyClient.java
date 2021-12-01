@@ -421,6 +421,21 @@ public static void refresh(){
 		case "/help":
 			help();
 		break;
+		case "/queue":
+			//queue(command);
+		break;
+		case "/priorityQueue":
+			//priorityQueue(command);
+		break;
+		case "/next":
+			next();
+		break;
+		case "/last":
+			last();
+		break;
+		case "/show":
+			show();
+		break;
 		default:
 			System.out.println("error: enter valid command");
 			refresh();
