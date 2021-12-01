@@ -54,7 +54,7 @@ public class javafyClient extends Thread
 //		//Resumes the current song
 //	}
 //	
-//	public static void play(Song song){
+//	public static void play(String song){
 //		//Skips the queue and current song and plays the song specified. Must be formatted as /play.
 //	}
 //	
@@ -63,39 +63,47 @@ public class javafyClient extends Thread
 //	}
 //	 
 //	 
-//	 public static void queue(Song song, List playlist){//Puts the specified media in queue behind and adds a playlist to a queue
-//		 //Queue<Song> trackQueue = new LinkedList<Song>();
-//		 //playlist = bag(playlist);
-//		 
-//		 //may want to remove the list playlist parameter and leave playlist as a variable
-//		 for(int i = 0; i <= playlist.size(); i++){
-//			 trackQueue.offer((Song) playlist.get(i));
-//		 }
-//		 
-//		 trackQueue.offer(song);
-//	}
+	 public static void queue(String song, List playlist){//Puts the specified media in queue behind and adds a playlist to a queue
+		 //Queue<Song> trackQueue = new LinkedList<Song>();
+		 //playlist = bag(playlist);
+		 
+		 //may want to remove the list playlist parameter and leave playlist as a variable
+		 for(int i = 0; i <= playlist.size(); i++){
+			 trackQueue.offer((String) playlist.get(i));
+		 }
+		 
+		 trackQueue.offer(song);
+		 refresh();
+	}
 //	
 //	 public static List bag(List playlist){
 //	 	//Puts the specified media in bag for randomization
 //	}
 //	 
-//	 public static void priorityQueue (Song song, List playlist){
-//	 	//Puts the specified media before anything else in the queue
-//	}
-//
+	 public static void priorityQueue (String song, List playlist){//Puts the specified media before anything else in the queue
+		 trackQueue.offer(song);
+		 
+		 for(int i = 0; i <= playlist.size(); i++){
+			 trackQueue.offer((String) playlist.get(i));
+		 }
+		 
+		 refresh();
+	 }
+
 	 public static void clear (){//Clears the entire queue with the exception of the song currently playing
 		 String s = trackQueue.poll();
 		 
 		 trackQueue.clear();
 		 
 		 trackQueue.add(s);
+		 refresh();
 	 }
 //	 
 //	 public static void skip(String timestamp) {
 //		 //Skips to the specified timestamp of current song
 //		 //[Produces error if time specified is longer than song]
 //	}
-//	 
+	 
 	 public static void next() {//Skips to the next song in queue
 		 String s = trackQueue.poll();
 		 
@@ -105,6 +113,7 @@ public class javafyClient extends Thread
 			 System.out.println("No additional tracks in queue");
 			 System.exit(1);
 		 }
+		 refresh();
 	}
 	 
 
@@ -122,13 +131,12 @@ public class javafyClient extends Thread
 		 
 		 trackQueue.clear();
 		 trackQueue.addAll(tempQueue);
+		 refresh();
 	}
-
-//	 
+ 
 //	 public static void restart() {
 //		 //Starts the current song from the beginning
-//	}
-//	 
+//	} 
 
 	 public static void back(){//most likely type will change to song instead of void.
 		 //Shows the previous display [returns error if display is at start]
@@ -170,6 +178,7 @@ public class javafyClient extends Thread
 			break;
 			}
 		} 
+	 
 	public static void show(){//Shows the queue
 		int tQ = trackQueue.size();
 		Queue<String> tempQueue = new LinkedList<String>();
@@ -179,7 +188,7 @@ public class javafyClient extends Thread
 			tempQueue.add(s);
 			System.out.printf("%d", s);
 		}
-
+		refresh();
 	}
 	 
 public static void select(String command){
