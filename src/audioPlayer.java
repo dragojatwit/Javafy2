@@ -1,4 +1,7 @@
+import java.io.File;
 import java.io.FileInputStream;
+import java.nio.file.Paths;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,30 +17,23 @@ import javafx.stage.Stage;
 
 public class audioPlayer extends Application
 {
-	String currentSong;
-	
-	public void changeSong(String currentSong)
-	{
-		this.currentSong = currentSong;
-	}
-
-	public void play()
-	{
-		launch();
-	}
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception 
 	{
 		try
 		{
-	        MediaPlayer player = new MediaPlayer(new Media(currentSong));
+			
+	        Media m = new Media(Paths. get(javafyClient.getCurrentSong()).toUri().toString());
+	        MediaPlayer player = new MediaPlayer(m);
 	        MediaView mediaView = new MediaView(player);
 	
 	        FileInputStream input = new FileInputStream("assets/button.jpg");
 	        Image image = new Image(input);
 	        ImageView imageView = new ImageView(image);
-	        Button pause = new Button("dsafsdf",imageView);
+	        imageView.setFitHeight(50);
+	        imageView.setFitWidth(50);
+	        Button pause = new Button("",imageView);
 	        
 	        pause.setOnAction(value -> {
 	        	Status status = player.getStatus();
@@ -52,7 +48,8 @@ public class audioPlayer extends Application
 	        });
 	        
 	        Pane root = new Pane(mediaView,pause);
-	        Scene scene = new Scene(pause, 1000, 1000);
+	    
+	        Scene scene = new Scene(root, 500, 500);
 	        
 	        primaryStage.setTitle("Media Player");
 	        primaryStage.setScene(scene);

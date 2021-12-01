@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -16,13 +17,39 @@ import javafx.stage.Stage;
 
 
 
-public class javafyClient //implements Runnable
+public class javafyClient extends Thread
 
 {
 	static String currentSong = new String("");
 	static Queue<String> trackQueue = new LinkedList<String>();
 	static Queue<String> prevQueue = new LinkedList<String>();
-	
+	private static String currentLevel;
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Start of main
+	public static void main(String[] args) {
+		
+		currentSong = "Music/mmad.wav";
+	    javafyClient thread = new javafyClient();
+	    thread.start();
+
+
+			Scanner sc = new Scanner(System.in);
+			//keeps track of current level for return command
+			//topLevel, playlistLevel, albumLevel, songLevel
+			setCurrentLevel("topLevel");
+			//playlist / album / song selection level
+			
+			
+			System.out.println("Welcome to Javafy!");
+			System.out.println("use #/select to choose");
+			
+			while (getCurrentLevel().equals("topLevel")){
+				setCurrentLevel("topLevel");
+				
+				System.out.println("[1]Playlists:		[2]Albums:		[3]Songs:");
+				String in1 = sc.nextLine();
+				commandTaker(in1);
+				}
+	}
 //	public static void play(){
 //		//Resumes the current song
 //	}
@@ -249,41 +276,13 @@ public static void refresh(){
 
 }
 	
-	private static String currentLevel;
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Start of main
-	public static void main(String[] args) {
-
-	    currentSong = "Music/mmad.wav";
-	    audioPlayer player = new audioPlayer();
-	    player.changeSong(currentSong);
-	    Application.launch(audioPlayer.class,args);
-
-			Scanner sc = new Scanner(System.in);
-			//keeps track of current level for return command
-			//topLevel, playlistLevel, albumLevel, songLevel
-			setCurrentLevel("topLevel");
-			//playlist / album / song selection level
-			
-			
-			System.out.println("Welcome to Javafy!");
-			System.out.println("use #/select to choose");
-			
-			while (getCurrentLevel().equals("topLevel")){
-				setCurrentLevel("topLevel");
-				
-				System.out.println("[1]Playlists:		[2]Albums:							[3]Songs:");
-				String in1 = sc.nextLine();
-				commandTaker(in1);
-				}
-	}
-	
 //calls top level
 	public static void home(){
 		Scanner sc = new Scanner(System.in);
 		while (getCurrentLevel().equals("topLevel")){
 			setCurrentLevel("topLevel");
 			
-			System.out.println("[1]Playlists:		[2]Albums:							[3]Songs:");
+			System.out.println("[1]Playlists:		[2]Albums:		[3]Songs:");
 			String in1 = sc.nextLine();
 			commandTaker(in1);
 			}
@@ -428,6 +427,7 @@ public static void refresh(){
 		System.out.println("\"/command\" - ");
 		System.out.println("\"/command\" - ");
 		System.out.println("\"/command\" - ");
+		refresh();
 		return;
 	}
 	
@@ -439,7 +439,18 @@ public static void refresh(){
 		currentLevel = lvl;
 	}
 	
+	public static String getCurrentSong()
+	{
+		return currentSong;
+	}
 	//commandTaker(playlistCommand);
 	//playlistCommand = sc.nextLine();
+	@Override
+	public void run() 
+	{
+		audioPlayer player = new audioPlayer();
+	    Application.launch(audioPlayer.class);
+		
+	}
 
 }
