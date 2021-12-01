@@ -123,7 +123,8 @@ public class javafyClient //implements Runnable
 	private static String currentLevel;
 	public static void main(String[] args) {
 	    currentSong = "Music/mmad.wav";
-	    audioPlayer player = new audioPlayer(currentSong);
+	    audioPlayer player = new audioPlayer();
+	    player.changeSong(currentSong);
 	    Application.launch(audioPlayer.class,args);
 			Scanner sc = new Scanner(System.in);
 			//keeps track of current level for return command

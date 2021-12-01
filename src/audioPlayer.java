@@ -1,21 +1,9 @@
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Scanner;
-  
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -27,7 +15,7 @@ public class audioPlayer extends Application
 {
 	String currentSong;
 	
-	public audioPlayer(String currentSong)
+	public void changeSong(String currentSong)
 	{
 		this.currentSong = currentSong;
 	}
