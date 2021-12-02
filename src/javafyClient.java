@@ -23,8 +23,8 @@ public class javafyClient extends Thread
 	//Song currentSong = null;
 	//Song angelDust = new Song("Mac Miller - Angel Dust", "Music/mmad.wav","Faces");
 	String currentSong = "";
-	static Queue<String> trackQueue = new LinkedList<String>();
-	static Queue<String> prevQueue = new LinkedList<String>();
+	static Queue<Song> trackQueue = new LinkedList<Song>();
+	static List<Song> prevList = new LinkedList<Song>();
 	private static String currentLevel;
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Start of main
 	public static void main(String[] args) {
@@ -65,16 +65,22 @@ public class javafyClient extends Thread
 //	}
 //	 
 //	 
-	 public static void queue(String song, List playlist){//Puts the specified media in queue behind and adds a playlist to a queue
+	 public static void queue(Song song){//Puts the specified media in queue behind and adds a playlist to a queue
+		 //Queue<Song> trackQueue = new LinkedList<Song>();
+		 //playlist = bag(playlist);
+		 trackQueue.offer(song);
+		 refresh();
+	}
+	 
+	 public static void queue(List playlist){//Puts the specified media in queue behind and adds a playlist to a queue
 		 //Queue<Song> trackQueue = new LinkedList<Song>();
 		 //playlist = bag(playlist);
 		 
 		 //may want to remove the list playlist parameter and leave playlist as a variable
 		 for(int i = 0; i <= playlist.size(); i++){
-			 trackQueue.offer((String) playlist.get(i));
+			 trackQueue.offer((Song) playlist.get(i));
 		 }
 		 
-		 trackQueue.offer(song);
 		 refresh();
 	}
 //	
@@ -82,22 +88,30 @@ public class javafyClient extends Thread
 //	 	//Puts the specified media in bag for randomization
 //	}
 //	 
-	 public static void priorityQueue (String song, List playlist){//Puts the specified media before anything else in the queue
-		 trackQueue.offer(song);
-		 
+	 public static void priorityQueue (Song song){//Puts the specified media before anything else in the queue
+		 Queue<Song> tempQueue = new LinkedList<Song>();
+		 tempQueue.offer(song);
+		 tempQueue.addAll(trackQueue);
+		 trackQueue.clear();
+		 trackQueue.addAll(tempQueue);
+		 refresh();
+	 }
+	 
+	 public static void priorityQueue (List playlist){//Puts the specified media before anything else in the queue
+		 Queue<Song> tempQueue = new LinkedList<Song>();
 		 for(int i = 0; i <= playlist.size(); i++){
-			 trackQueue.offer((String) playlist.get(i));
+			 tempQueue.offer((Song) playlist.get(i));
 		 }
-		 
+		 tempQueue.addAll(trackQueue);
+		 trackQueue.clear();
+		 trackQueue.addAll(tempQueue);
 		 refresh();
 	 }
 
-	 public static void clear (){//Clears the entire queue with the exception of the song currently playing
-		 String s = trackQueue.poll();
+	 public static void clear(){//Clears the entire queue with the exception of the song currently playing
+		 Song s = trackQueue.poll();
 		 
 		 trackQueue.clear();
-		 
-		 trackQueue.add(s);
 		 refresh();
 	 }
 //	 
@@ -107,9 +121,9 @@ public class javafyClient extends Thread
 //	}
 	 
 	 public static void next() {//Skips to the next song in queue
-		 String s = trackQueue.poll();
+		 Song s = trackQueue.poll();
 		 
-		 prevQueue.add(s);
+		 prevList.add(s);
 		 
 		 if(s == null){
 			 System.out.println("No additional tracks in queue");
@@ -120,8 +134,9 @@ public class javafyClient extends Thread
 	 
 
 	 public static void last() {//Plays the last song played
-		 Queue<String> tempQueue = new LinkedList<String>();
-		 String p = prevQueue.poll();
+		 Queue<Song> tempQueue = new LinkedList<Song>();
+		 Song p = prevList.get(0);
+		 prevList.remove(0);
 		  
 		 if(p == null){
 			 System.out.println("No previous tracks in queue");
@@ -183,10 +198,10 @@ public class javafyClient extends Thread
 	 
 	public static void show(){//Shows the queue
 		int tQ = trackQueue.size();
-		Queue<String> tempQueue = new LinkedList<String>();
+		Queue<Song> tempQueue = new LinkedList<Song>();
 		
 		for(int i = 0; i <= tQ; i++){
-			String s = trackQueue.poll();
+			Song s = trackQueue.poll();
 			tempQueue.add(s);
 			System.out.printf("%d", s);
 		}
