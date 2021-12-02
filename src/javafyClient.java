@@ -20,21 +20,23 @@ import javafx.stage.Stage;
 public class javafyClient extends Thread
 
 {
-	//Song currentSong = null;
-	//Song angelDust = new Song("Mac Miller - Angel Dust", "Music/mmad.wav","Faces");
-
-	String currentSong = "";
+	
+	static Song angelDust = new Song("Mac Miller - Angel Dust", "Music/mmad.wav","Faces");
+	
 	static Queue<Song> trackQueue = new LinkedList<Song>();
 	static List<Song> prevList = new LinkedList<Song>();
-
+	public static Song currentSong = null;
+	public static Song previousSong = prevList.get(0);
+	
 	private static String currentLevel;
+	
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Start of main
 	public static void main(String[] args) {
 		
-		currentSong = "Music/mmad.wav";
+		currentSong = angelDust;
 	    javafyClient thread = new javafyClient();
 	    thread.start();
-
+	    
 
 			Scanner sc = new Scanner(System.in);
 			//keeps track of current level for return command
@@ -488,10 +490,11 @@ public static void refresh(){
 		currentLevel = lvl;
 	}
 	
-	public static String getCurrentSong()
-	{
-		return currentSong;
-	}
+//	public static Song getCurrentSong()
+//	{
+//		return currentSong;
+//	}
+//	
 	//commandTaker(playlistCommand);
 	//playlistCommand = sc.nextLine();
 	@Override

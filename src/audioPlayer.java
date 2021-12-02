@@ -24,10 +24,12 @@ public class audioPlayer extends Application
 		try
 		{
 			
-	        Media m = new Media(Paths. get(javafyClient.getCurrentSong()).toUri().toString());
+	        Media m = new Media(Paths. get(javafyClient.currentSong.getPath()).toUri().toString());
 	        MediaPlayer player = new MediaPlayer(m);
 	        MediaView mediaView = new MediaView(player);
 	
+	        
+	        
 	        FileInputStream input = new FileInputStream("assets/button.jpg");
 	        Image image = new Image(input);
 	        ImageView imageView = new ImageView(image);
