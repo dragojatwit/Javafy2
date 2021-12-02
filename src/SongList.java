@@ -1,11 +1,12 @@
 import java.util.List;
 
-public class Album 
+//For playlists and albums
+public class SongList 
 {
 	private List<Song> songs;
 	private String title;
 	
-	public Album(List<Song> songs, String title)
+	public SongList(List<Song> songs, String title)
 	{
 		this.setSongs(songs);
 		this.setTitle(title);
@@ -41,6 +42,11 @@ public class Album
 	
 	public String toString()
 	{
-		return title;
+		String t = "Title\n";
+		for(int i = 0; i < songs.size(); i++)
+		{
+			t += "[" + i + "] " + songs.get(0) + "\n";
+		}
+		return t;
 	}
 }

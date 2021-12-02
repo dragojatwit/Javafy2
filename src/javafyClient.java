@@ -22,7 +22,7 @@ public class javafyClient extends Thread
 {
 	//Song currentSong = null;
 	//Song angelDust = new Song("Mac Miller - Angel Dust", "Music/mmad.wav","Faces");
-	String currentSong = "";
+	static String currentSong = "";
 	static Queue<String> trackQueue = new LinkedList<String>();
 	static Queue<String> prevQueue = new LinkedList<String>();
 	private static String currentLevel;
@@ -244,6 +244,7 @@ public static void select(String parameter){
 			}
 			break;
 		}
+	 //return null;
 }
 
 //goes on the end of anything that is not a select or return function/ method (refresh)
@@ -431,7 +432,8 @@ public static void refresh(){
 			//queue(command);
 		break;
 		case "/priorityQueue":
-			//priorityQueue(command);
+			//priortiyQueue(select(parameter));
+			
 		break;
 		case "/next":
 			next();
