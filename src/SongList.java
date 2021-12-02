@@ -4,12 +4,12 @@ import java.util.List;
 public class SongList 
 {
 	private List<Song> songs;
-	private String title;
+	private String listTitle;
 	
-	public SongList(List<Song> songs, String title)
+	public SongList(List<Song> songs, String listTitle)
 	{
 		this.setSongs(songs);
-		this.setTitle(title);
+		this.setTitle(listTitle);
 	}
 
 	/**
@@ -27,22 +27,22 @@ public class SongList
 	}
 
 	/**
-	 * @return the title
+	 * @return the listTitle
 	 */
 	public String getTitle() {
-		return title;
+		return listTitle;
 	}
 
 	/**
-	 * @param title the title to set
+	 * @param listTitle the listTitle to set
 	 */
-	public void setTitle(String title) {
-		this.title = title;
+	public void setTitle(String listTitle) {
+		this.listTitle = listTitle;
 	}
 	
 	public String toString()
 	{
-		String t = "Title\n";
+		String t = listTitle + "\n";
 		for(int i = 0; i < songs.size(); i++)
 		{
 			t += "[" + i + "] " + songs.get(0) + "\n";

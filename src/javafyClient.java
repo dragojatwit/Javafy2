@@ -21,8 +21,6 @@ public class javafyClient extends Thread
 
 {
 	
-	static Song angelDust = new Song("Mac Miller - Angel Dust", "Music/mmad.wav","Faces");
-	
 	static Queue<Song> trackQueue = new LinkedList<Song>();
 	static List<Song> prevList = new LinkedList<Song>();
 	public static Song currentSong = null;
@@ -33,7 +31,8 @@ public class javafyClient extends Thread
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Start of main
 	public static void main(String[] args) {
 		
-		currentSong = angelDust;
+		SongManager.setUp();
+		currentSong = SongManager.cloud;
 	    javafyClient thread = new javafyClient();
 	    thread.start();
 	    
@@ -497,6 +496,7 @@ public static void refresh(){
 //	
 	//commandTaker(playlistCommand);
 	//playlistCommand = sc.nextLine();
+	
 	@Override
 	public void run() 
 	{
