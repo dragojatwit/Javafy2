@@ -101,8 +101,6 @@ public class javafyClient extends Thread
 	 }
 
 	 public static void clear(){//Clears the entire queue with the exception of the song currently playing
-		 Song s = trackQueue.poll();
-		 
 		 trackQueue.clear();
 		 refresh();
 	 }
