@@ -54,19 +54,7 @@ public class javafyClient extends Thread
 				commandTaker(in1);
 				}
 	}
-//	public static void play(){
-//		//Resumes the current song
-//	}
-//	
-//	public static void play(String song){
-//		//Skips the queue and current song and plays the song specified. Must be formatted as /play.
-//	}
-//	
-//	 public static void pause(){
-//		 //Stops the current song. Must be formatted as /pause
-//	}
-//	 
-//	 
+	
 	 public static void queue(Song song){//Puts the specified media in queue behind and adds a playlist to a queue
 		 //Queue<Song> trackQueue = new LinkedList<Song>();
 		 //playlist = bag(playlist);
