@@ -115,7 +115,7 @@ public class javafyClient extends Thread
 	 public static void next() {//Skips to the next song in queue
 		 Song s = trackQueue.poll();
 		 
-		 prevList.add(s);
+		 prevList.add(0, s);
 		 
 		 if(s == null){
 			 System.out.println("No additional tracks in queue");
