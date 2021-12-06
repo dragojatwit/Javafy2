@@ -109,16 +109,13 @@ public class javafyClient extends Thread
 //		 //[Produces error if time specified is longer than song]
 //	}
 	 
-	 public static void next() {//Skips to the next song in queue
+	 public static Song next() {//Skips to the next song in queue
 		 Song s = trackQueue.poll();
 		 
 		 prevList.add(0, s);
 		 
-		 if(s == null){
-			 System.out.println("No additional tracks in queue");
-			 System.exit(1);
-		 }
 		 refresh();
+		 return s;
 	}
 	 
 
