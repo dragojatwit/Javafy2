@@ -16,7 +16,7 @@ public class SongManager
 	static public SongList summerPack;
 	static public SongList playlist1;
 	static public SongList playlist2;
-	
+	static public Tree tree;
 	public static void setUp()
 	{
 		list = new LinkedList<Song>();
@@ -30,8 +30,21 @@ public class SongManager
 		list.add(summertimeMagic);
 		list.add(feelsLikeSummer);
 		summerPack = new SongList(list, "Summer Pack");
+		list.clear();
 		
-		Tree tree = new Tree();
+		list.add(summertimeMagic);
+		list.add(mountain);
+		list.add(jade);
+		playlist1 = new SongList(list, "playlist1");
+		list.clear();
+		
+		list.add(feelsLikeSummer);
+		list.add(cloud);
+		list.add(outMind);
+		list.add(ninetyEight);
+		playlist2 = new SongList(list, "playlist2");
+		
+		tree = new Tree();
 		tree.insert("","Tree");
 		tree.insert("Tree", "Playlists");
 		tree.insert("Tree", "Albums");
