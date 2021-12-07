@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Random;
 
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -74,11 +75,16 @@ public class javafyClient extends Thread
 		 
 		 refresh();
 	}
-//	
-//	 public static List bag(List playlist){
-//	 	//Puts the specified media in bag for randomization
-//	}
-//	 
+	
+	 public static Bag bag(List playlist){
+		 Bag bag = new Bag();
+		 for(int i = 0; i <= playlist.size(); i++){
+			 double index = Math.floor(Math.random() * playlist.size());
+			 bag.bagadd(playlist.get((int) index));
+		 }
+	 	//Puts the specified media in bag for randomization
+	}
+	 
 	 public static void priorityQueue (Song song){//Puts the specified media before anything else in the queue
 		 Queue<Song> tempQueue = new LinkedList<Song>();
 		 tempQueue.offer(song);
