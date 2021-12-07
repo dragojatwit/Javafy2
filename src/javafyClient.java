@@ -22,6 +22,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import p1.lab4.comp2000.ArrayBag;
 
 
 
@@ -75,17 +76,15 @@ public class javafyClient <T> extends Application implements Runnable
 	}
 	
 	 public static void queue(Song song){//Puts the specified media in queue behind and adds a playlist to a queue
-		 //Queue<Song> trackQueue = new LinkedList<Song>();
-		 //playlist = bag(playlist);
 		 trackQueue.offer(song);
 		 refresh();
 	}
 	 
 	 public static void queue(List playlist){//Puts the specified media in queue behind and adds a playlist to a queue
-		 //Queue<Song> trackQueue = new LinkedList<Song>();
-		 //playlist = bag(playlist);
-		 
-		 //may want to remove the list playlist parameter and leave playlist as a variable
+		 //Bag bag = bag(playlist);
+		 //for(int i = 0; i <= bag.size(); i++){
+		 //		bag.offer(bag.remove(i));
+	 	 //}
 		 for(int i = 0; i <= playlist.size(); i++){
 			 trackQueue.offer((Song) playlist.get(i));
 		 }
@@ -141,8 +140,9 @@ public class javafyClient <T> extends Application implements Runnable
 //		 Bag bag = new Bag();
 //		 for(int i = 0; i <= playlist.size(); i++){
 //			 double index = Math.floor(Math.random() * playlist.size());
-//			 //bag.bagadd(playlist.get((int) index));
+//			 bag.add(playlist.get((int) index));
 //		 }
+//		 return bag;
 //	 	//Puts the specified media in bag for randomization
 //	}
 	 
