@@ -1,0 +1,163 @@
+
+public class Bag {
+
+	public final class ArrayBag<T> {
+
+	    private final T[] bag;
+	    private int numberOfEntries;
+	    private static final int DEFAULT_CAPACITY = 25;
+	    
+	    private boolean initialized = false;
+	    private static final int MAX_CAPACITY = 10000;
+
+	    public ArrayBag() {
+	        this(DEFAULT_CAPACITY);
+	    } 
+
+	    public ArrayBag(int desiredCapacity) {
+	        if (desiredCapacity <= MAX_CAPACITY) {
+
+	            @SuppressWarnings("unchecked")
+	            T[] tempBag = (T[]) new Object[desiredCapacity]; 
+	            bag = tempBag;
+	            numberOfEntries = 0;
+	            initialized = true;
+	        }
+	        else
+	            throw new IllegalStateException("Attempt to create a bag " +
+	                                            "whose capacity exceeds " +
+	                                            "allowed maximum.");
+	    } // end constructor
+
+	    public boolean bagadd(T newEntry) {
+	        checkInitialization();
+	        boolean result = true;
+	        if (isArrayFull()) {
+	            result = false;
+	        } else { // Assertion: result is true here
+	            bag[numberOfEntries] = newEntry;
+	            numberOfEntries++;
+	        } // end if
+	        return result;
+	 
+	    } // end add
+
+
+	    private void checkInitialization()
+	    {
+	        if (!initialized)
+	             throw new SecurityException("ArrayBag object is not initialized properly.");
+	    }
+	    
+
+	    public T[] toArray() {
+	        // the cast is safe because the new array contains null entries
+	        @SuppressWarnings("unchecked")
+	        T[] result = (T[]) new Object[numberOfEntries]; // unchecked cast
+	        for (int index = 0; index < numberOfEntries; index++) {
+	            result[index] = bag[index];
+	        } // end for
+	        return result;
+	    } // end toArray
+	   
+	    private boolean isArrayFull() {
+	        return numberOfEntries >= bag.length;
+	    } // end isArrayFull
+
+	    public boolean isEmpty() {
+	        return numberOfEntries == 0;
+	    } // end isEmpty
+
+	
+	    public int getCurrentSize() {
+	        return numberOfEntries;
+	    } // end getCurrentSize
+
+
+	    public int getFrequencyOf(T anEntry) {
+	        checkInitialization();
+	        int counter = 0;
+	        for (int index = 0; index < numberOfEntries; index++) {
+	            if (anEntry.equals(bag[index])) {
+	                counter++;
+	            } // end if
+	        } // end for
+	        return counter;
+	    } // end getFrequencyOf
+
+
+	    public boolean contains(T anEntry) {
+	        checkInitialization();
+	        return getIndexOf(anEntry) > -1;
+	    } // end contains
+
+	    /** Removes all entries from this bag. */
+	    public void clear() {
+	        while (!isEmpty()) {
+	            remove();
+	        }
+	    } // end clear
+
+
+	    public T remove() {
+	        checkInitialization();
+	        
+	        int x = (int) (Math.random() * (numberOfEntries - 1));//makes this guaranteed to be less or equal to number of entries - 1.
+	        T result = removeEntry(x);
+	        return result;
+	    } // end remove
+
+
+	    public boolean remove(T anEntry) {
+	        checkInitialization();
+	        int index = getIndexOf(anEntry);
+	        T result = removeEntry(index);
+	        return anEntry.equals(result);
+	    } // end remove
+
+	    private T removeEntry(int givenIndex) {
+	        T result = null;
+	        if (!isEmpty() && (givenIndex >= 0)) {
+	            result = bag[givenIndex];                   // entry to remove
+	            bag[givenIndex] = bag[numberOfEntries - 1]; // Replace entry with last entry
+	            bag[numberOfEntries - 1] = null;            // remove last entry
+	           numberOfEntries--;
+	         } // end if
+	        return result;
+	    } // end removeEntry
+	    
+	    
+
+	    public String toString() {
+
+	        String result = "Bag{Size:" + numberOfEntries + " ";
+	        
+
+	        for (int index = 0; index < numberOfEntries; index++) {
+	            result += "[" + bag[index] + "] ";
+	        } // end for
+
+	        result += "}";
+	        return result;
+	    } // end toArray
+
+	    private int getIndexOf(T anEntry) {
+	        int where = -1;
+	        boolean stillLooking = true;
+	        int index = 0;
+	        while ( stillLooking && (index < numberOfEntries)) {
+	            if (anEntry.equals(bag[index])) {
+	                stillLooking = false;
+	                where = index;
+	            } // end if
+	            index++;
+	        } // end for
+	        
+	        // Assertion: If where > -1, anEntry is in the array bag, and it
+	        // equals bag[where]; otherwise, anEntry is not in the array
+	        return where;
+	    } // end getIndexOf
+
+	}
+
+}
