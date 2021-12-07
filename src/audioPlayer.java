@@ -25,15 +25,16 @@ public class audioPlayer extends Application
 {
 	
 	private Timer timer;
-
+	Media m = new Media(Paths. get(javafyClient.currentSong.getPath()).toUri().toString());
+    MediaPlayer player;
+    
 	@Override
 	public void start(Stage primaryStage) throws Exception 
 	{
 		try
 		{
 			
-	        Media m = new Media(Paths. get(javafyClient.currentSong.getPath()).toUri().toString());
-	        MediaPlayer player = new MediaPlayer(m);
+			player = new MediaPlayer(m);
 	        MediaView mediaView = new MediaView(player);
 	        
 	        
@@ -63,8 +64,13 @@ public class audioPlayer extends Application
 	        		{
 	        			public void run()
 	        			{
+	        				System.out.println("fasdf");
 	        				player.stop();
+	        				Media n = new Media(Paths. get(javafyClient.currentSong.getPath()).toUri().toString());
+	        				player = new MediaPlayer(n);
+	        				mediaView.setMediaPlayer(player);
 	        				player.play();
+	        				
 	        			}
 	        		};
 	        		
@@ -78,12 +84,12 @@ public class audioPlayer extends Application
 	        	{
 	        		player.play();
 	        		this.timer = new Timer();
-	        		this.timer.schedule(task, (long)player.getTotalDuration().toSeconds() / 1000);
+	        		this.timer.schedule(task, (long)player.getTotalDuration().toSeconds() * 1000);
 	        	}
 	        	
 	        });
 	        
-	        timer.schedule(task, (long) seconds / 1000);
+	        timer.schedule(task, 5000l);
 
 		}
 		catch (Exception e)
@@ -93,5 +99,9 @@ public class audioPlayer extends Application
 		
 	}
 
+	public Timer getTimer()
+	{
+		return timer;
+	}
 
 }

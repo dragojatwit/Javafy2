@@ -1,15 +1,22 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Random;
 
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
@@ -18,7 +25,7 @@ import javafx.stage.Stage;
 
 
 
-public class javafyClient <T> extends Thread
+public class javafyClient <T> extends Application implements Runnable
 
 {
 	
@@ -26,6 +33,10 @@ public class javafyClient <T> extends Thread
 	static List<Song> prevList = new LinkedList<Song>();
 	public static Song currentSong = null;
 	public static Song previousSong = null;
+	
+	private Timer timer;
+	Media m = new Media(Paths. get(javafyClient.currentSong.getPath()).toUri().toString());
+    MediaPlayer player;
 	
 	private static String currentLevel;
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Start of main
@@ -42,11 +53,12 @@ public class javafyClient <T> extends Thread
 		
 		trackQueue.add(SongManager.test);
 		trackQueue.add(SongManager.summertimeMagic);
+		trackQueue.add(SongManager.cloud);
 		
 //		System.out.println(trackQueue.poll().toString());
 		
 		currentSong = SongManager.cloud;
-	    javafyClient thread = new javafyClient();
+	    Thread thread = new Thread(new javafyClient());
 	    thread.start();
 		
 		System.out.println("Welcome to Javafy!");
@@ -81,15 +93,58 @@ public class javafyClient <T> extends Thread
 		 refresh();
 	}
 
-	
-	 public static Bag bag(List playlist){
-		 Bag bag = new Bag();
-		 for(int i = 0; i <= playlist.size(); i++){
-			 double index = Math.floor(Math.random() * playlist.size());
-			 bag.bagadd(playlist.get((int) index));
-		 }
-	 	//Puts the specified media in bag for randomization
+	public static void queueCommand(String parameter)
+	{
+		Song s = null;
+		switch(currentLevel)
+		 {
+		 	case "songLevel":
+				
+			break;
+			case "playlist1":
+				switch(parameter)
+				{
+				case "1":
+					s = SongManager.playlist1.getSongs().get(0);
+					break;
+				case "2":
+					s = SongManager.playlist1.getSongs().get(1);
+					break;
+				case "3":
+					s = SongManager.playlist1.getSongs().get(2);
+					break;
+				case "4":
+					s = SongManager.playlist1.getSongs().get(3);
+					break;
+				}
+			break;
+			case "playlist2":
+				setCurrentLevel("playlistLevel");
+				playlistLevel();
+			break;
+			case "album1":
+				setCurrentLevel("albumLevel");
+				albumLevel();
+			break;
+			case "album2":
+				setCurrentLevel("albumLevel");
+				albumLevel();
+			break;
+			default :
+				System.out.println("Please select a menu before using /queue");
+				refresh();
+		}
+		queue(s);
 	}
+	
+//	 public static Bag bag(List playlist){
+//		 Bag bag = new Bag();
+//		 for(int i = 0; i <= playlist.size(); i++){
+//			 double index = Math.floor(Math.random() * playlist.size());
+//			 //bag.bagadd(playlist.get((int) index));
+//		 }
+//	 	//Puts the specified media in bag for randomization
+//	}
 	 
 
 	 public static void priorityQueue (Song song){//Puts the specified media before anything else in the queue
@@ -479,7 +534,7 @@ public static void refresh(){
 			help();
 		break;
 		case "/queue":
-			//queue(command);
+			queueCommand(parameter);
 		break;
 		case "/priorityQueue":
 			//priortiyQueue(select(parameter));
@@ -532,20 +587,82 @@ public static void refresh(){
 	@Override
 	public void run() 
 	{
-		audioPlayer player = new audioPlayer();
-		while(true)
-		{
-			while(!trackQueue.isEmpty())
-			{	
-				currentSong = next();
-				//System.out.println(currentSong.toString());
-				Application.launch(audioPlayer.class);
-				
-			}
-			//prevList.clear
-		}
+		//audioPlayer player = new audioPlayer();
+		launch();
 		
+	}
+	
+	public void start(Stage primaryStage) throws Exception 
+	{
+		try
+		{
+			
+			player = new MediaPlayer(m);
+	        MediaView mediaView = new MediaView(player);
+	        
+	        
+	        
+	        FileInputStream input = new FileInputStream("assets/button.jpg");
+	        Image image = new Image(input);
+	        ImageView imageView = new ImageView(image);
+	        imageView.setFitHeight(50);
+	        imageView.setFitWidth(50);
+	        Button pause = new Button("",imageView);
+	        
+	        Pane root = new Pane(mediaView,pause);
 	    
+	        Scene scene = new Scene(root, 500, 500);
+	        
+	        primaryStage.setTitle("Media Player");
+	        primaryStage.setScene(scene);
+	        primaryStage.show();
+	
+	        player.play();
+
+	        	//System.out.println("playing");
+	        double seconds = m.getDuration().toSeconds();
+	        timer = new Timer();
+	        
+	        		
+    		pause.setOnAction(value -> {
+	        	Status status = player.getStatus();
+	        	if(status == status.PLAYING)
+	        	{
+	        		player.pause();
+	        		
+	        	}else
+	        	{
+	        		player.play();
+	        		
+	        		
+	        	}
+	        	
+	        });
+	        for(int i = 0; i < trackQueue.size(); i++ )
+	        {
+	        	timer.schedule(new TimerTask()
+	        			{
+			        		public void run()
+		        			{
+		        				player.stop();
+		        				currentSong = next();
+		        				Media n = new Media(Paths. get(currentSong.getPath()).toUri().toString());
+		        				player = new MediaPlayer(n);
+		        				mediaView.setMediaPlayer(player);
+		        				player.play();
+		        				
+		        			}
+	        			}
+	        			
+	        			, i * 10000l);
+	        	
+	        }
+
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 	}
 
