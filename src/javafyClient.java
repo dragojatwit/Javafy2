@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 
 
-public class javafyClient extends Thread
+public class javafyClient <T> extends Thread
 
 {
 	
@@ -28,7 +28,6 @@ public class javafyClient extends Thread
 	public static Song previousSong = prevList.get(0);
 	
 	private static String currentLevel;
-	
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Start of main
 	public static void main(String[] args) {
 		
@@ -38,23 +37,24 @@ public class javafyClient extends Thread
 	    thread.start();
 	    
 
-			Scanner sc = new Scanner(System.in);
-			//keeps track of current level for return command
-			//topLevel, playlistLevel, albumLevel, songLevel
+		Scanner sc = new Scanner(System.in);
+		//keeps track of current level for return command
+		//topLevel, playlistLevel, albumLevel, songLevel
+		setCurrentLevel("topLevel");
+		//playlist / album / song selection level
+		
+		
+		System.out.println("Welcome to Javafy!");
+		System.out.println("use /select # to choose");
+		
+		while (getCurrentLevel().equals("topLevel"))
+		{
 			setCurrentLevel("topLevel");
-			//playlist / album / song selection level
 			
-			
-			System.out.println("Welcome to Javafy!");
-			System.out.println("use /select # to choose");
-			
-			while (getCurrentLevel().equals("topLevel")){
-				setCurrentLevel("topLevel");
-				
-				System.out.println("[1]Playlists:		[2]Albums:		[3]Songs:");
-				String in1 = sc.nextLine();
-				commandTaker(in1);
-				}
+			System.out.println("[1]Playlists:		[2]Albums:		[3]Songs:");
+			String in1 = sc.nextLine();
+			commandTaker(in1);
+		}
 	}
 	
 	 public static void queue(Song song){//Puts the specified media in queue behind and adds a playlist to a queue
@@ -75,6 +75,7 @@ public class javafyClient extends Thread
 		 
 		 refresh();
 	}
+
 	
 	 public static Bag bag(List playlist){
 		 Bag bag = new Bag();
@@ -85,6 +86,7 @@ public class javafyClient extends Thread
 	 	//Puts the specified media in bag for randomization
 	}
 	 
+
 	 public static void priorityQueue (Song song){//Puts the specified media before anything else in the queue
 		 Queue<Song> tempQueue = new LinkedList<Song>();
 		 tempQueue.offer(song);
@@ -115,16 +117,45 @@ public class javafyClient extends Thread
 //		 //[Produces error if time specified is longer than song]
 //	}
 	 
-	 public static void next() {//Skips to the next song in queue
+
+	 public static void play(String parameter)
+	 {
+		 switch(currentLevel)
+		 {
+		 	case "songLevel":
+				
+			break;
+			case "playlist1":
+				
+			break;
+			case "playlist2":
+				setCurrentLevel("playlistLevel");
+				playlistLevel();
+			break;
+			case "album1":
+				setCurrentLevel("albumLevel");
+				albumLevel();
+			break;
+			case "album2":
+				setCurrentLevel("albumLevel");
+				albumLevel();
+			break;
+			default :
+				System.out.println("Please select a menu before using /play");
+				refresh();
+		}
+	} 
+		 
+	 
+	 
+
+	 public static Song next() {//Skips to the next song in queue
 		 Song s = trackQueue.poll();
 		 
 		 prevList.add(0, s);
 		 
-		 if(s == null){
-			 System.out.println("No additional tracks in queue");
-			 System.exit(1);
-		 }
 		 refresh();
+		 return s;
 	}
 	 
 
@@ -256,6 +287,8 @@ public static void select(String parameter){
 		}
 	 //return null;
 }
+
+
 
 //goes on the end of anything that is not a select or return function/ method (refresh)
 public static void refresh(){
@@ -429,6 +462,9 @@ public static void refresh(){
 		}
 		
 		switch(command) {
+		case "/play":
+			play(parameter);
+		break;
 		case "/select":
 			select(parameter);
 		break;
@@ -493,7 +529,17 @@ public static void refresh(){
 	public void run() 
 	{
 		audioPlayer player = new audioPlayer();
-	    Application.launch(audioPlayer.class);
+		while(true)
+		{
+			while(!trackQueue.isEmpty())
+			{
+				//currentSong = 
+				Application.launch(audioPlayer.class);
+			}
+			
+		}
+		
+	    
 		
 	}
 
