@@ -1,9 +1,8 @@
-
 public class Bag {
 
-	public final class ArrayBag<T> {
+	public final class ArrayBag<Song> {
 
-	    private final T[] bag;
+	    private final Song[] bag;
 	    private int numberOfEntries;
 	    private static final int DEFAULT_CAPACITY = 25;
 	    
@@ -18,7 +17,7 @@ public class Bag {
 	        if (desiredCapacity <= MAX_CAPACITY) {
 
 	            @SuppressWarnings("unchecked")
-	            T[] tempBag = (T[]) new Object[desiredCapacity]; 
+	            Song[] tempBag = (Song[]) new Object[desiredCapacity]; 
 	            bag = tempBag;
 	            numberOfEntries = 0;
 	            initialized = true;
@@ -29,7 +28,7 @@ public class Bag {
 	                                            "allowed maximum.");
 	    } // end constructor
 
-	    public boolean bagadd(T newEntry) {
+	    public boolean bagadd(Song newEntry) {
 	        checkInitialization();
 	        boolean result = true;
 	        if (isArrayFull()) {
@@ -50,10 +49,10 @@ public class Bag {
 	    }
 	    
 
-	    public T[] toArray() {
+	    public Song[] toArray() {
 	        // the cast is safe because the new array contains null entries
 	        @SuppressWarnings("unchecked")
-	        T[] result = (T[]) new Object[numberOfEntries]; // unchecked cast
+	        Song[] result = (Song[]) new Object[numberOfEntries]; // unchecked cast
 	        for (int index = 0; index < numberOfEntries; index++) {
 	            result[index] = bag[index];
 	        } // end for
@@ -74,7 +73,7 @@ public class Bag {
 	    } // end getCurrentSize
 
 
-	    public int getFrequencyOf(T anEntry) {
+	    public int getFrequencyOf(Song anEntry) {
 	        checkInitialization();
 	        int counter = 0;
 	        for (int index = 0; index < numberOfEntries; index++) {
@@ -86,7 +85,7 @@ public class Bag {
 	    } // end getFrequencyOf
 
 
-	    public boolean contains(T anEntry) {
+	    public boolean contains(Song anEntry) {
 	        checkInitialization();
 	        return getIndexOf(anEntry) > -1;
 	    } // end contains
@@ -99,24 +98,24 @@ public class Bag {
 	    } // end clear
 
 
-	    public T remove() {
+	    public Song remove() {
 	        checkInitialization();
 	        
 	        int x = (int) (Math.random() * (numberOfEntries - 1));//makes this guaranteed to be less or equal to number of entries - 1.
-	        T result = removeEntry(x);
+	        Song result = removeEntry(x);
 	        return result;
 	    } // end remove
 
 
-	    public boolean remove(T anEntry) {
+	    public boolean remove(Song anEntry) {
 	        checkInitialization();
 	        int index = getIndexOf(anEntry);
-	        T result = removeEntry(index);
+	        Song result = removeEntry(index);
 	        return anEntry.equals(result);
 	    } // end remove
 
-	    private T removeEntry(int givenIndex) {
-	        T result = null;
+	    private Song removeEntry(int givenIndex) {
+	        Song result = null;
 	        if (!isEmpty() && (givenIndex >= 0)) {
 	            result = bag[givenIndex];                   // entry to remove
 	            bag[givenIndex] = bag[numberOfEntries - 1]; // Replace entry with last entry
@@ -141,7 +140,7 @@ public class Bag {
 	        return result;
 	    } // end toArray
 
-	    private int getIndexOf(T anEntry) {
+	    private int getIndexOf(Song anEntry) {
 	        int where = -1;
 	        boolean stillLooking = true;
 	        int index = 0;
