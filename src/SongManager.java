@@ -10,6 +10,7 @@ public class SongManager
 	static public Song jade = new Song("JADE","Music/JADE.wav","MONSUNE");
 	static public Song summertimeMagic = new Song("Summertime Magic","Music/Childish Gambino - Summertime Magic.wav","Summer Pack");
 	static public Song feelsLikeSummer = new Song("Feels Like Summer","Music/Childish Gambino - Feels Like Summer.wav","Summer Pack");
+	static public Song test = new Song("test","Music/test.wav","t");
 	
 	static private List<Song> list;
 	static public SongList monsune;

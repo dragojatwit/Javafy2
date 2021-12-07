@@ -24,16 +24,13 @@ public class javafyClient <T> extends Thread
 	static Queue<Song> trackQueue = new LinkedList<Song>();
 	static List<Song> prevList = new LinkedList<Song>();
 	public static Song currentSong = null;
-	public static Song previousSong = prevList.get(0);
+	public static Song previousSong = null;
 	
 	private static String currentLevel;
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Start of main
 	public static void main(String[] args) {
 		
 		SongManager.setUp();
-		currentSong = SongManager.cloud;
-	    javafyClient thread = new javafyClient();
-	    thread.start();
 	    
 
 		Scanner sc = new Scanner(System.in);
@@ -42,6 +39,14 @@ public class javafyClient <T> extends Thread
 		setCurrentLevel("topLevel");
 		//playlist / album / song selection level
 		
+		trackQueue.add(SongManager.test);
+		trackQueue.add(SongManager.summertimeMagic);
+		
+//		System.out.println(trackQueue.poll().toString());
+		
+		currentSong = SongManager.cloud;
+	    javafyClient thread = new javafyClient();
+	    thread.start();
 		
 		System.out.println("Welcome to Javafy!");
 		System.out.println("use /select # to choose");
@@ -146,8 +151,7 @@ public class javafyClient <T> extends Thread
 		 Song s = trackQueue.poll();
 		 
 		 prevList.add(0, s);
-		 
-		 refresh();
+		 previousSong = prevList.get(0);
 		 return s;
 	}
 	 
@@ -525,11 +529,13 @@ public static void refresh(){
 		while(true)
 		{
 			while(!trackQueue.isEmpty())
-			{
-				//currentSong = 
+			{	
+				currentSong = next();
+				//System.out.println(currentSong.toString());
 				Application.launch(audioPlayer.class);
+				
 			}
-			
+			//prevList.clear
 		}
 		
 	    
