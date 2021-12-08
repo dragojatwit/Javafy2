@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 public class Bag {
 
 	public final class ArrayBag<Song> {
@@ -28,17 +30,22 @@ public class Bag {
 	                                            "allowed maximum.");
 	    } // end constructor
 
-	    public boolean bagadd(Song newEntry) {
-	        checkInitialization();
+	    @SuppressWarnings("unchecked")
+		public void add(Object newEntry) {
+	        /**checkInitialization();
 	        boolean result = true;
 	        if (isArrayFull()) {
 	            result = false;
 	        } else { // Assertion: result is true here
 	            bag[numberOfEntries] = newEntry;
 	            numberOfEntries++;
-	        } // end if
-	        return result;
-	 
+	        } // end if**/
+	    	try {
+	    	      bag[numberOfEntries] = (Song) newEntry;
+	    	      numberOfEntries++;
+	    	    } catch (ArrayIndexOutOfBoundsException n) {
+	    	      JOptionPane.showMessageDialog(null, "Array is full, element will not be added");
+	    	    }
 	    } // end add
 
 
