@@ -654,7 +654,7 @@ public static void refresh(){
 		        			}
 	        			}
 	        			
-	        			, i * 10000l);
+	        			, i * 10000l); //ten second gaps relative to i to give time for songs to play
 	        	
 	        }
 
